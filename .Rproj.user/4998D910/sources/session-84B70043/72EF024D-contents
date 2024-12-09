@@ -1,0 +1,61 @@
+library(tidyverse)
+library(dplyr)
+library(reactable)
+library(htmltools)
+knitr::opts_chunk$set(echo=FALSE, message=FALSE)
+
+# Load data
+read.csv("june23-all.csv",stringsAsFactors = FALSE) -> linkers
+
+# Change POS, semantic fields, classes to factors
+mutate(linkers, 
+       source = as.factor(source),
+       parts.num = as.factor(parts.num),
+       parts.order = as.factor(parts.order),
+       position = as.factor(position),
+       pos = as.factor(pos),
+       pos.type = as.factor(pos.type),
+       other_pos = as.factor(other_pos),
+       semfield1 = as.factor(semfield1),
+       subfield1 = as.factor(subfield1),
+       semfield2 = as.factor(semfield2),
+       subfield2 = as.factor(subfield2),
+       correl.oblig = as.factor(correl.oblig),
+       comp.oblig = as.factor(comp.oblig)
+) -> linkers
+
+custom_aggr <- "
+    function(values, rows) {
+      // input:
+      //  - values: an array of all values in the group
+      //  - rows: an array of row data values for all rows in the group (optional)
+      //
+      // output:
+      //  - an aggregated value, e.g. a comma-separated list
+      set = [...new Set(values)];
+      filtered = set.filter(function(e) { return e != null; });
+      return filtered.join('; ');
+    }
+  "
+
+filterList <- function(values, name) {
+  tags$select(
+    # Set to undefined to clear the filter
+    onchange = sprintf("Reactable.setFilter('linkertbl', '%s', event.target.value || undefined)", name),
+    # "All" has an empty value to clear the filter, and is the default option
+    tags$option(value = "", "Все"),
+    lapply(sort(unique(values)), tags$option),
+    "aria-label" = sprintf("Filter %s", name),
+    style = "width: 100%; height: 28px;"
+  )
+}
+
+detailsFunc <- function(index, df) {
+  htmltools::div(
+    htmltools::p(
+      htmltools::tags$b("Другие части речи: "), 
+      df[index, ]$other_pos),
+    htmltools::p(
+      htmltools::tags$b("Другие значения: "), 
+      df[index, ]$other_senses))
+}

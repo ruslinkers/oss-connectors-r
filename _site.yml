@@ -1,0 +1,10 @@
+name: "ruslinkers"
+navbar:
+  title: "Осетинские коннекторы"
+  left:
+    - text: "Главная"
+      href: index.html
+    - text: "Коннекторы"
+      href: linkers.html
+    - text: "Семантические поля"
+      href: semfields.html

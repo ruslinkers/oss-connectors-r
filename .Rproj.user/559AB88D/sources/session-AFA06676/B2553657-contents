@@ -1,0 +1,78 @@
+---
+pagetitle: "Коннекторы"
+output: html_document
+---
+
+```{r, include=FALSE}
+source("shared.R")
+```
+
+# Коннекторы {.tabset}
+
+## По словарям
+
+```{r render table 1}
+reactable(linkers,
+          defaultPageSize = 100,
+          filterable = TRUE,
+          searchable = FALSE, 
+          showSortable = TRUE, 
+          showSortIcon = TRUE,
+          groupBy = c("linker", "source"),
+          columns = list(
+            ptclass = colDef(show = FALSE),
+            other_senses = colDef(show = FALSE),
+            other_pos = colDef(show = FALSE),
+            subsense1 = colDef(show = FALSE),
+            subsense2 = colDef(show = FALSE),
+            linker = colDef(name = "Коннектор"),
+            source = colDef(name = "Источник",
+                            filterInput = filterList),
+            pos = colDef(name = "Часть речи",
+                         aggregate = JS(custom_aggr),
+                         filterInput = filterList),
+            sense = colDef(name = "Значение"),
+            semfield1 = colDef(name = "Семантическое поле 1",
+                               aggregate = JS(custom_aggr),
+                               filterInput = filterList),
+            semfield2 = colDef(name = "Семантическое поле 2",
+                               aggregate = JS(custom_aggr),
+                               filterInput = filterList)
+          ),
+          details = function(index) { detailsFunc(index, linkers) },          
+          elementId = "linkertbl1")
+```
+
+## По семантическим полям
+
+```{r render table 2}
+reactable(linkers,
+          defaultPageSize = 100,
+          filterable = TRUE,
+          searchable = FALSE, 
+          showSortable = TRUE, 
+          showSortIcon = TRUE,
+          groupBy = c("linker", "semfield1"),
+          columns = list(
+            ptclass = colDef(show = FALSE),
+            other_senses = colDef(show = FALSE),
+            other_pos = colDef(show = FALSE),
+            subsense1 = colDef(show = FALSE),
+            subsense2 = colDef(show = FALSE),
+            linker = colDef(name = "Коннектор"),
+            source = colDef(name = "Источник",
+                            filterInput = filterList),
+            pos = colDef(name = "Часть речи",
+                         aggregate = JS(custom_aggr),
+                         filterInput = filterList),
+            sense = colDef(name = "Значение"),
+            semfield1 = colDef(name = "Семантическое поле 1",
+                               aggregate = JS(custom_aggr),
+                               filterInput = filterList),
+            semfield2 = colDef(name = "Семантическое поле 2",
+                               aggregate = JS(custom_aggr),
+                               filterInput = filterList)
+          ),
+          details = function(index) { detailsFunc(index, linkers) },
+          elementId = "linkertbl2")
+```
