@@ -8,3 +8,5 @@ navbar:
       href: linkers.html
     - text: "Семантические поля"
       href: semfields.html
+    - text: "На сайт проекта"
+      href: http://ruscon.belyaev.io
