@@ -27,55 +27,85 @@ reactable(linkers,
             htmltools::div(paste(linkers[index, "example"]), htmltools::br(), paste(linkers[index, "tr.ru"]))
           },
           columns = list(
-            gloss.ru = colDef(name='Перевод'),
+            gloss.ru = colDef(name = 'Перевод'),
             semfield = colDef(name = 'Семантическое поле',
                               filterInput = filterList),
             marker = colDef(name = 'Коннектор'),
-            corr = colDef(name='Коррелят'),
-            example = colDef(name='Пример', show = FALSE),
+            corr = colDef(name = 'Коррелят'),
+            example = colDef(name = 'Пример', show = FALSE),
             tr.ru = colDef(show = FALSE),
             correl.pos = colDef(name = 'Позиция коррелята',
                                 html= TRUE,
                                 filterInput = filterList,
                                 details = function(index) {
-                                  if(!is.na(linkers[index, "correl.pos.ex"])) {
-                                    paste(linkers[index, "correl.pos.ex"])
+                                  if (!is.na(linkers[index, "correl.pos.ex"])) {
+                                    paste("<b>Пример:</b>",
+                                          linkers[index, "correl.pos.ex"])
+                                  }
+                                  if (!is.na(linkers[index,
+                                                     "correl.pos.comm"])) {
+                                    paste("<b>Комментарий:</b>",
+                                          linkers[index, "correl.pos.comm"])
                                   }
                                 }),
             correl.pos.ex = colDef(show = FALSE),
+            correl.pos.comm = colDef(show = FALSE),
             correl.omit = colDef(name = 'Опущение коррелята',
                                  html = TRUE,
                                  filterInput = filterList,
                                  details = function(index) {
-                                  if(!is.na(linkers[index, "correl.omit.ex"])) {
-                                    paste(linkers[index, "correl.omit.ex"])
-                                  }
-                                }),
+                                   if (!is.na(linkers[index,
+                                                      "correl.omit.ex"])) {
+                                     paste("<b>Пример:</b>",
+                                           linkers[index, "correl.omit.ex"])
+                                   }
+                                   if (!is.na(linkers[index,
+                                                      "correl.omit.comm"])) {
+                                     paste("<b>Комментарий:</b>",
+                                           linkers[index, "correl.omit.comm"])
+                                   }
+                                 }),
             correl.omit.ex = colDef(show = FALSE),
+            correl.omit.comm = colDef(show = FALSE),
             clause.pos = colDef(name = 'Позиция клаузы с коннектором',
                                 html = TRUE,
                                 filterInput = filterList,
                                 details = function(index) {
-                                  if(!is.na(linkers[index, "clause.pos.ex"])) {
-                                    paste(linkers[index, "clause.pos.ex"])
+                                  if (!is.na(linkers[index, "clause.pos.ex"])) {
+                                    paste("<b>Пример:</b>",
+                                          linkers[index, "clause.pos.ex"])
+                                  }
+                                  if (!is.na(linkers[index,
+                                                     "clause.pos.comm"])) {
+                                    paste("\n<b>Комментарий:</b>",
+                                          linkers[index, "clause.pos.comm"])
                                   }
                                 }),
             clause.pos.ex = colDef(show = FALSE),
+            clause.pos.comm = colDef(show = FALSE),
             conn.pos = colDef(name = 'Позиция коннектора',
                               filterInput = filterList,
                               html = TRUE,
-                                 details = function(index) {
-                                  if(!is.na(linkers[index, "conn.pos.ex"])) {
-                                    paste(linkers[index, "conn.pos.ex"])
-                                  }
-                                }),
+                              details = function(index) {
+                                if (!is.na(linkers[index, "conn.pos.ex"])) {
+                                  paste("<b>Пример:</b>",
+                                        linkers[index, "conn.pos.ex"])
+                                }
+                                if (!is.na(linkers[index,
+                                                   "conn.pos.comm"])) {
+                                  paste("\n<b>Комментарий:</b>",
+                                        linkers[index, "conn.pos.comm"])
+                                }
+                              }),
             conn.pos.ex = colDef(show = FALSE),
+            conn.pos.comm = colDef(show = FALSE),
             correl.mod = colDef(name = 'Модификация коррелята',
                                 html = TRUE,
-                                 filterInput = filterList,
-                                 details = function(index) {
-                                  if(!is.na(linkers[index, "correl.mod.ex"])) {
-                                    paste(linkers[index, "correl.mod.ex"])
+                                filterInput = filterList,
+                                details = function(index) {
+                                  if (!is.na(linkers[index, "correl.mod.ex"])) {
+                                    paste("<b>Пример:</b>",
+                                          linkers[index, "correl.mod.ex"])
                                   }
                                 }),
             correl.mod.ex = colDef(show = FALSE),
@@ -83,26 +113,36 @@ reactable(linkers,
                            html = TRUE,
                            filterInput = filterList,
                            details = function(index) {
-                             if(!is.na(linkers[index, "focus.ex"])) {
-                               paste(linkers[index, "focus.ex"])
+                             if (!is.na(linkers[index, "focus.ex"])) {
+                               paste("<b>Пример:</b>",
+                                     linkers[index, "focus.ex"])
                              }
-                                }),
+                          }),
             focus.ex = colDef(show = FALSE),
             clause.indep = colDef(name = 'Независимое употребление',
                                   html = TRUE,
                                   filterInput = filterList,
                                   details = function(index) {
-                                    if(!is.na(linkers[index, "clause.indep.ex"])) {
-                                      paste(linkers[index, "clause.indep.ex"])
+                                    if (!is.na(linkers[index,
+                                                      "clause.indep.ex"])) {
+                                      paste("<b>Пример:</b>",
+                                            linkers[index, "clause.indep.ex"])
+                                    }
+                                    if (!is.na(linkers[index,
+                                                      "clause.indep.comm"])) {
+                                      paste("<b>Комментарий:</b>",
+                                            linkers[index, "clause.indep.comm"])
                                     }
                                   }),
             clause.indep.ex = colDef(show = FALSE),
-            illoc = colDef(name='Иллокутивное употребление',
+            clause.indep.comm = colDef(show = FALSE),
+            illoc = colDef(name = 'Иллокутивное употребление',
                            html = TRUE,
                            filterInput = filterList,
                            details = function(index) {
                              if(!is.na(linkers[index, "illoc.ex"])) {
-                               paste(linkers[index, "illoc.ex"])
+                               paste("<b>Пример:</b>",
+                                     linkers[index, "illoc.ex"])
                              }
                            }),
             illoc.ex = colDef(show=FALSE)
